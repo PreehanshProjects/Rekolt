@@ -19,12 +19,13 @@
 <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/editorial/produce-welcoming.webp" fetchpriority="high">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="enhancements.css">
 </head>
 <body>
 <a class="skip" href="#prices">Skip to the produce list</a>
 <header class="topbar">
   <a class="brand" href="#top" aria-label="Rekolt, home"><svg class="brand__logo" viewBox="85 175 855 725" aria-hidden="true" focusable="false"><image href="assets/logo/rekolt-logo-1024.png" width="1024" height="1024"/></svg></a>
-  <nav class="topnav" aria-label="Primary"><a href="#prices">The produce</a><a href="#standards">Our approach</a><a class="topnav__cta" href="#order" data-order-jump>Build an order <span aria-hidden="true">↗</span></a></nav>
+  <nav class="topnav" aria-label="Primary"><a href="#prices">The produce</a><a href="#standards">Our approach</a><a class="topnav__cta" href="#order" data-order-jump>Your order <span class="nav-count" data-order-count hidden>0</span><span aria-hidden="true">↗</span></a></nav>
 </header>
 <main id="top">
   <section class="hero" aria-labelledby="hero-title">
@@ -47,6 +48,11 @@
         <div class="catalogue-note"><span class="catalogue-note__symbol" aria-hidden="true">↗</span><p>A list that works <br>the way you do.</p><span>Select an ingredient to add it. <br>Review quantities in your order.</span></div>
       </aside>
       <div class="catalogue-products">
+        <div class="catalogue-tools" data-catalogue-tools hidden>
+          <label class="search-field" for="produce-search"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.5"/></svg><span class="sr-only">Search produce in English or French</span><input id="produce-search" type="search" placeholder="Find an ingredient…" autocomplete="off" spellcheck="false" data-search><button type="button" class="search-clear" data-search-clear hidden aria-label="Clear search">×</button></label>
+          <p class="search-count" data-search-count role="status" aria-live="polite">16 ingredients</p>
+        </div>
+        <div class="search-empty" data-search-empty hidden><p class="eyebrow">LET’S FIND WHAT YOU NEED</p><h3>No matching ingredients.</h3><p>Try another name, or ask us about your request on WhatsApp.</p><div><button type="button" class="text-action" data-search-reset>Show all produce <span aria-hidden="true">↗</span></button><a href="https://wa.me/23057563134" target="_blank" rel="noopener noreferrer">Ask Rekolt ↗</a></div></div>
         <div class="unitbar"><p>PRICES IN MAURITIAN RUPEES <span>· MUR</span></p><div class="unitbar__control"><span>Herb unit</span><div class="segmented" role="group" aria-label="Choose herb pricing unit"><button type="button" class="segmented__btn is-active" data-unit="500g" aria-pressed="true">500 g</button><button type="button" class="segmented__btn" data-unit="kg" aria-pressed="false">1 kg</button></div></div></div>
         <div class="catalogue-groups"><section class="group" id="category-specialty" data-category="specialty" aria-labelledby="g-specialty">
       <header class="group__head"><span class="group__number">01</span>
@@ -241,10 +247,11 @@
     <div class="section-head"><div><p class="eyebrow">03 / Your next service</p>
       <h2 id="order-title">Good things <br>start with <em>a list.</em></h2></div>
       <p>
-        Your selection, ready when you are. Adjust the quantities below, then copy your list or send it on WhatsApp.
+        Your ingredients, your quantities, one simple conversation. Review your list and send it straight to us on WhatsApp.
       </p>
     </div>
 
+    <div data-order-home><div class="order-workspace" data-order-workspace>
     <div class="docket" data-docket><div class="docket__heading"><span>REKOLT / ORDER LIST</span><span>MAURITIUS · MUR</span></div>
       <p class="docket__empty" data-docket-empty>
         <span class="docket__empty-mark" aria-hidden="true">+</span><strong>Your next order starts here.</strong><span>Choose your ingredients from <a href="#prices">the produce list</a>.</span>
@@ -267,6 +274,12 @@
       </div>
     </div>
 
+    <div class="order-details" data-order-details hidden>
+      <div class="order-details__intro"><h3>A few finishing details</h3><span>Optional</span></div>
+      <label for="order-business">Your name or business<input id="order-business" name="organization" autocomplete="organization" maxlength="100" placeholder="e.g. Café du Jardin" data-order-business></label>
+      <label for="order-notes">Anything we should know?<textarea id="order-notes" rows="3" maxlength="600" placeholder="Delivery request, preferred date, or pasta filling…" data-order-notes></textarea></label>
+      <p>We’ll confirm availability, delivery and final pricing together.</p>
+    </div>
     <p class="order__availability" data-order-availability hidden>WhatsApp ordering is coming soon. You can still build and copy your list.</p><div class="order__actions">
       <a class="btn btn--wa" href="https://wa.me/23057563134" target="_blank" rel="noopener noreferrer" data-wa-link>
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.13h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.16 8.16 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.21-8.24 8.21Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14 0-.31-.02-.47-.02-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.17-.47-.29Z" fill="currentColor"/></svg>
@@ -277,6 +290,7 @@
     </div>
 
     <p class="order__live" role="status" aria-live="polite" data-live></p>
+    </div></div>
   </section>
 </main>
 <footer class="footer"><div class="footer__grid"><div class="footer__brand"><a href="#top" class="footer__word" aria-label="Rekolt, home"><svg class="brand__logo" viewBox="85 175 855 725" aria-hidden="true" focusable="false"><image href="assets/logo/rekolt-logo-1024.png" width="1024" height="1024"/></svg></a><p>Good food begins with good produce.</p><span>GROWERS &amp; PURVEYORS · MAURITIUS</span></div><div class="footer__address"><h2>Rooted in Vacoas</h2><p>Grannum Road, Vacoas <br>1733-14, Mauritius</p><p class="footer__registration">Registered in Mauritius <br>BRN I26009005</p></div><div class="footer__contact"><h2>At your service</h2><a href="#prices">Explore the produce ↗</a><a href="#order" data-order-jump>Your order list ↗</a><a href="https://wa.me/23057563134" target="_blank" rel="noopener noreferrer" data-wa-plain aria-label="Order on WhatsApp at +230 5756 3134">WhatsApp · 5756 3134 ↗</a><a href="#" data-mail>Email ↗</a><p class="footer__placeholder" data-placeholder-note hidden>Direct contact details coming soon.</p></div></div><div class="footer__rule"><p>© <span data-year>2026</span> Rekolt. All rights reserved.</p><p>Editorial imagery is AI-created; actual produce may vary.</p><a href="#top">Back to top ↑</a></div></footer>
@@ -288,6 +302,13 @@
   </div>
 </aside>
 <noscript><p class="noscript-note">Browse the prices above and <a href="https://wa.me/23057563134" target="_blank" rel="noopener noreferrer">order on WhatsApp: 5756 3134</a>. Enable JavaScript to build your list here.</p></noscript>
+<dialog class="order-drawer" data-order-drawer aria-labelledby="drawer-title">
+  <header class="drawer-head"><div><p class="eyebrow">THE REKOLT TABLE</p><h2 id="drawer-title">Your selection<span>.</span></h2></div><button type="button" class="drawer-close" data-drawer-close aria-label="Close order panel" autofocus>×</button></header>
+  <p class="drawer-intro">Check your quantities, add a note, then send your order.</p>
+  <div class="drawer-body" data-drawer-body></div>
+  <button type="button" class="drawer-continue" data-drawer-close>← Continue browsing</button>
+</dialog>
+<div class="selection-toast" data-toast hidden><span data-toast-text></span><button type="button" data-order-jump>View order ↗</button></div>
 <script src="app.js"></script>
 </body>
 </html>

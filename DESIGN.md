@@ -10,6 +10,8 @@ All original 18 lines and prices are retained: 16 produce lines and two pasta li
 
 Readability was increased at the owner's request: 16–17px body copy, stronger secondary-text contrast, clear sans-serif product names, 12–13px units and botanical labels, and larger buttons. Mobile catalogue rows stack prices above their units so product names have more space. Headline typography and the supplied logo are retained.
 
+The finishing pass adds a quiet ingredient search with English/French aliases, matching counts and an actionable empty state. The order badge and temporary selection feedback make additions visible. A native modal side panel lets customers edit the same order while browsing, with Escape support, contained keyboard focus, and restoration of the catalogue position on close. Optional business details and notes are saved with the order and included in the WhatsApp message. A persistent close control and order actions keep the panel usable on smaller screens. Clearing the order also clears these optional details.
+
 Both editorial images were generated using the built-in image generation tool and saved as WebP in `assets/editorial/`. Complete prompts and source paths are recorded in `assets/editorial/PROVENANCE.md`. The footer identifies the imagery as AI-created.
 
 Responsive checks cover 320, 360, 390, 600, 768, 1024, 1440 and 1920 pixels. Browser checks cover selection, filtering, totals, quantity controls, pasta exclusions, clipboard output, restored orders, clearing, unavailable contact controls, asset loading and reading the catalogue without JavaScript. Desktop, tablet, mobile and populated order screenshots are in `tmp/preview/`. Reduced motion and print styles are provided.

@@ -10,7 +10,8 @@ Run `python -m http.server 4173 --bind 127.0.0.1` from this folder, then open `h
 
 - `index.html`: page, all 18 products and their published prices.
 - `styles.css`: responsive forest-green and ivory design, self-hosted Bodoni Moda and Archivo.
-- `app.js`: category filtering, herb weight units, persistent order list, quantities, totals and clipboard/WhatsApp handoff.
+- `enhancements.css`: catalogue search, selection feedback and responsive order panel.
+- `app.js`: English/French ingredient search, category filtering, herb weight units, persistent order list, quantities, optional business details and notes, accessible order panel, and clipboard/WhatsApp handoff.
 - `assets/logo/`: supplied Rekolt identity. The header and footer display the original PNG in an inline SVG viewport that removes surrounding empty space without changing the artwork.
 - `assets/editorial/`: optimized WebP editorial imagery and generation provenance.
 - `DESIGN.md`: design decisions and verification notes.
@@ -29,7 +30,15 @@ Editorial imagery was created with the built-in image generation tool, optimized
 
 ## Verification
 
-`tmp/verify-premium.cjs` exercises product selection, categories, unit switching, quantity changes, quoted pasta exclusion, clipboard contents, persistence, removal and clearing. It verifies the WhatsApp destination and exact prefilled order message without sending a message. It checks readable text sizes and layout at eight viewport widths from 320 to 1920 pixels, asset loading, browser errors and catalogue/WhatsApp links without JavaScript. It uses the installed local Playwright cache; adjust its import path on another machine. Screenshots are saved to `tmp/preview/`.
+The site has no runtime dependencies. Install the development-only browser test tools and run:
+
+```sh
+npm ci
+npx playwright install chromium
+npm test
+```
+
+The test runner starts and stops its own local server. `tests/site.cjs` checks ingredient searches in English/French, categories, selection, weight units, quantities, quoted pasta exclusion, clipboard output, persistence and clearing. It verifies the WhatsApp destination and exact message, including optional notes, without sending a message. It checks the order panel, keyboard focus, returning to the catalogue, eight viewport widths from 320 to 1920 pixels, asset loading and the no-JavaScript fallback. Screenshots are saved to `tmp/preview/`.
 
 ## Deployment
 

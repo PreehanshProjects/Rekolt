@@ -1,0 +1,12 @@
+{
+  "name": "rekolt",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Rekolt fresh produce catalogue and WhatsApp order builder",
+  "scripts": {
+    "test": "node tests/site.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.61.1"
+  }
+}

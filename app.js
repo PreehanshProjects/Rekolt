@@ -27,6 +27,9 @@ const CONFIG = {
   const state = {
     unit: '500g',                 // '500g' | 'kg' — herbs only
     order: new Map(),             // id -> qty
+    category: 'all',
+    business: '',
+    notes: '',
   };
 
   /* ── Catalogue, read straight off the rendered list ─────────────────── */
@@ -45,18 +48,51 @@ const CONFIG = {
     });
   });
 
+  const search = $('[data-search]');
+  const aliases = {
+    microgreen: 'microgreens sprouts', fleur: 'edible flowers', fraise: 'strawberry strawberries',
+    ananas: 'pineapple', coco: 'coconut', laitue: 'lettuce salad', concombre: 'cucumber',
+    betterave: 'beet beetroot', ail: 'garlic', gingembre: 'ginger', menthe: 'mint',
+    thym: 'thyme', coriandre: 'coriander cilantro cotomili', queue: 'spring onion scallion', persil: 'parsley',
+  };
+  const normalize = (text) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  function filterProduce() {
+    const terms = normalize(search.value).split(/\s+/).filter(Boolean);
+    let matches = 0;
+    $$('[data-category]').forEach((group) => {
+      let visible = 0;
+      $$('.line', group).forEach((line) => {
+        const haystack = normalize(`${line.textContent} ${aliases[line.dataset.id] || ''}`);
+        const show = (state.category === 'all' || group.dataset.category === state.category)
+          && terms.every((term) => haystack.includes(term));
+        line.hidden = !show;
+        if (show) visible++;
+      });
+      group.hidden = visible === 0;
+      matches += visible;
+    });
+    $$('[data-filter]').forEach((link) => {
+      if (link.dataset.filter === state.category) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+    });
+    $('[data-search-clear]').hidden = !search.value;
+    $('[data-search-empty]').hidden = matches > 0;
+    $('[data-search-count]').textContent = `${matches} ${matches === 1 ? 'ingredient' : 'ingredients'}`;
+  }
+  $('[data-catalogue-tools]').hidden = false;
+  search.addEventListener('input', filterProduce);
+  $('[data-search-clear]').addEventListener('click', () => {
+    search.value = ''; filterProduce(); search.focus();
+  });
+  $('[data-search-reset]').addEventListener('click', () => {
+    state.category = 'all'; search.value = ''; filterProduce(); search.focus();
+  });
   // Links remain useful category anchors without JavaScript.
   $$('[data-filter]').forEach((link) => {
     link.addEventListener('click', (event) => {
       event.preventDefault();
-      const category = link.dataset.filter;
-      $$('[data-category]').forEach((group) => {
-        group.hidden = category !== 'all' && group.dataset.category !== category;
-      });
-      $$('[data-filter]').forEach((item) => {
-        if (item === link) item.setAttribute('aria-current', 'true');
-        else item.removeAttribute('aria-current');
-      });
+      state.category = link.dataset.filter;
+      filterProduce();
       const rail = $('.catalogue-layout');
       if (rail.getBoundingClientRect().top < 0) {
         rail.scrollIntoView({ block: 'start' });
@@ -102,6 +138,8 @@ const CONFIG = {
       localStorage.setItem(STORE_KEY, JSON.stringify({
         unit: state.unit,
         order: Array.from(state.order.entries()),
+        business: state.business,
+        notes: state.notes,
       }));
     } catch (_) { /* private mode — the page still works, it just forgets */ }
   }
@@ -112,9 +150,11 @@ const CONFIG = {
       if (!raw) return;
       const data = JSON.parse(raw);
       if (data.unit === 'kg' || data.unit === '500g') state.unit = data.unit;
+      if (typeof data.business === 'string') state.business = data.business.slice(0, 100);
+      if (typeof data.notes === 'string') state.notes = data.notes.slice(0, 600);
       if (Array.isArray(data.order)) {
         data.order.forEach(([id, qty]) => {
-          if (catalogue.has(id) && Number(qty) > 0) state.order.set(id, Number(qty));
+          if (catalogue.has(id) && Number.isInteger(qty) && qty > 0 && qty <= 200) state.order.set(id, qty);
         });
       }
     } catch (_) { /* corrupt payload — start clean */ }
@@ -181,6 +221,57 @@ const CONFIG = {
   const totalSlot   = $('[data-docket-total]');
   const tray        = $('[data-tray]');
   const clearBtn    = $('[data-clear]');
+  const businessInput = $('[data-order-business]');
+  const notesInput = $('[data-order-notes]');
+  const drawer = $('[data-order-drawer]');
+  const workspace = $('[data-order-workspace]');
+  const orderHome = $('[data-order-home]');
+  let drawerOpener;
+  let drawerScrollY = 0;
+  let browseProduceOnClose = false;
+
+  function openOrder(opener) {
+    if (typeof drawer.showModal !== 'function') return false;
+    if (drawer.open) return true;
+    drawerOpener = opener;
+    drawerScrollY = window.scrollY;
+    $('[data-drawer-body]').append(workspace);
+    drawer.showModal();
+    document.body.classList.add('order-open');
+    $('[data-toast]').hidden = true;
+    return true;
+  }
+  $$('[data-drawer-close]').forEach((button) => button.addEventListener('click', () => drawer.close()));
+  drawer.addEventListener('click', (event) => {
+    const rect = drawer.getBoundingClientRect();
+    if (event.target === drawer && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) drawer.close();
+  });
+  drawer.addEventListener('close', () => {
+    orderHome.append(workspace);
+    document.body.classList.remove('order-open');
+    if (browseProduceOnClose) {
+      browseProduceOnClose = false;
+      $('#prices').scrollIntoView({ block: 'start' });
+      search.focus({ preventScroll: true });
+    } else {
+      window.scrollTo({ top: drawerScrollY, behavior: 'instant' });
+      const focusTarget = drawerOpener?.isConnected && drawerOpener.getClientRects().length
+        ? drawerOpener : $('.topnav__cta');
+      if (focusTarget) focusTarget.focus({ preventScroll: true });
+    }
+  });
+  drawer.addEventListener('click', (event) => {
+    if (event.target.closest('a[href="#prices"]')) {
+      event.preventDefault();
+      browseProduceOnClose = true;
+      drawer.close();
+    }
+  });
+  [businessInput, notesInput].forEach((input) => input.addEventListener('input', () => {
+    state.business = businessInput.value.slice(0, 100);
+    state.notes = notesInput.value.slice(0, 600);
+    wireWhatsApp(); save();
+  }));
 
   /** Priced lines only. An "on request" line must never invent a figure. */
   function total() {
@@ -207,6 +298,9 @@ const CONFIG = {
     docketEmpty.hidden = count > 0;
     docketFoot.hidden = count === 0;
     clearBtn.hidden = count === 0;
+    $('[data-order-details]').hidden = count === 0;
+    $('[data-copy]').disabled = count === 0;
+    $$('[data-order-count]').forEach((slot) => { slot.textContent = String(count); slot.hidden = count === 0; });
 
     state.order.forEach((qty, id) => {
       const item = catalogue.get(id);
@@ -285,7 +379,7 @@ const CONFIG = {
     // Tray
     tray.hidden = count === 0;
     $('[data-tray-count]').textContent = String(count);
-    $('[data-tray-word]').textContent = count === 1 ? 'line' : 'lines';
+    $('[data-tray-word]').textContent = count === 1 ? 'item' : 'items';
     $('[data-tray-total]').textContent = rs(sum);
 
     wireWhatsApp();
@@ -311,14 +405,16 @@ const CONFIG = {
   }
 
   function focusDocket() {
-    const next = $('.stepper button', docketLines) || $('[data-copy]');
+    const next = $('.stepper button', docketLines) || $('[data-wa-link]');
     if (next) next.focus({ preventScroll: true });
   }
 
   clearBtn.addEventListener('click', () => {
     state.order.clear();
+    state.business = ''; state.notes = '';
+    businessInput.value = ''; notesInput.value = '';
     paintLines(); renderDocket(); save();
-    $('[data-copy]').focus({ preventScroll: true });
+    $('[data-wa-link]').focus({ preventScroll: true });
     announce('Order cleared.');
   });
 
@@ -326,6 +422,7 @@ const CONFIG = {
   function orderText() {
     const date = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
     const lines = [`Rekolt order — ${date}`, ''];
+    if (state.business.trim()) lines.push(`Name / business: ${state.business.trim()}`, '');
 
     let i = 1;
     state.order.forEach((qty, id) => {
@@ -337,6 +434,7 @@ const CONFIG = {
 
     lines.push('', `Estimated total: Rs ${rs(total())}`);
     if (hasOnRequest()) lines.push('(excludes lines marked "rate please")');
+    if (state.notes.trim()) lines.push('', `Notes: ${state.notes.trim()}`);
     return lines.join('\n');
   }
 
@@ -425,8 +523,11 @@ const CONFIG = {
   function announce(msg) {
     if (!live) return;
     live.textContent = msg;
+    const toast = $('[data-toast]');
+    $('[data-toast-text]').textContent = msg;
+    toast.hidden = drawer.open;
     clearTimeout(liveTimer);
-    liveTimer = setTimeout(() => { live.textContent = ''; }, 4000);
+    liveTimer = setTimeout(() => { live.textContent = ''; toast.hidden = true; }, 4500);
   }
 
   /* ── Hide the tray once the real docket is on screen ─────────────────── */
@@ -446,13 +547,15 @@ const CONFIG = {
   if (countSlot) countSlot.textContent = String(catalogue.size);
 
   $$('[data-order-jump]').forEach((a) => {
-    a.addEventListener('click', () => {
-      if (!state.order.size) announce('Tap any line in the list to start your order.');
+    a.addEventListener('click', (event) => {
+      if (openOrder(a)) event.preventDefault();
     });
   });
 
   /* ── Go ─────────────────────────────────────────────────────────────── */
   restore();
+  businessInput.value = state.business;
+  notesInput.value = state.notes;
   paintUnit();
   paintLines();
   renderDocket();
