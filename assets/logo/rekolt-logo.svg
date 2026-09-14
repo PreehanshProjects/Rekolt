@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1254" height="1254" viewBox="0 0 1254 1254" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="rekoltGreen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0E4A35"/>
+      <stop offset="100%" stop-color="#1E6B4A"/>
+    </linearGradient>
+    <linearGradient id="leafGreen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#76B24A"/>
+      <stop offset="100%" stop-color="#4E8F2F"/>
+    </linearGradient>
+    <style>
+      .brand { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; fill: url(#rekoltGreen); }
+      .sub { font-family: Arial, Helvetica, sans-serif; letter-spacing: 0.25em; fill: url(#rekoltGreen); font-weight: 700; }
+      .tiny { font-family: Arial, Helvetica, sans-serif; letter-spacing: 0.12em; fill: #0E4A35; font-weight: 700; }
+      .gold { fill: #B9982F; }
+    </style>
+  </defs>
+
+  <text x="627" y="410" text-anchor="middle" font-size="360" class="brand">R</text>
+  <path d="M534 348
+           C595 356, 658 394, 712 449
+           C746 484, 767 524, 783 576
+           C713 548, 651 523, 597 489
+           C553 461, 512 420, 484 368
+           C500 358, 517 351, 534 348Z" fill="url(#leafGreen)"/>
+  <path d="M756 523
+           C798 540, 834 572, 852 623
+           C809 612, 772 590, 746 558
+           C738 548, 731 535, 726 521
+           C735 519, 744 519, 756 523Z" fill="url(#leafGreen)"/>
+  <path d="M810 606
+           C839 611, 864 624, 880 646
+           C856 649, 832 644, 809 632
+           C794 625, 782 616, 772 604
+           C785 602, 798 602, 810 606Z" fill="url(#leafGreen)"/>
+
+  <text x="627" y="760" text-anchor="middle" font-size="250" class="brand">Rekolt</text>
+
+  <rect x="108" y="818" width="180" height="8" rx="4" class="gold"/>
+  <rect x="968" y="818" width="180" height="8" rx="4" class="gold"/>
+  <text x="627" y="842" text-anchor="middle" font-size="46" class="sub">FRESH PRODUCE</text>
+
+  <text x="627" y="895" text-anchor="middle" font-size="26" class="tiny">FRUITS   •   VEGETABLES   •   HERBS   •   MICROGREENS   •   EDIBLE FLOWERS</text>
+</svg>

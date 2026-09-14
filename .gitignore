@@ -1,0 +1,21 @@
+# Local previews, generated intermediates and internal research notes
+tmp/
+.impeccable/
+PRODUCT.md
+_viewport-harness.html
+render/out/
+*.blend
+*.blend1
+
+# Local configuration and tooling
+.env
+.env.*
+!.env.example
+.vercel/
+node_modules/
+test-results/
+playwright-report/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
