@@ -187,3 +187,5 @@ h2, .tenet h3 { text-wrap: balance; }
   .order-drawer { position: static; height: auto; max-height: none; overflow: visible; border: 0; width: 100%; }
   .drawer-head, .drawer-intro, .drawer-continue { display: none; }
 }
+.line__price .ask { font: 400 13px/1.4 var(--sans); white-space: normal; text-align: right; }
+.docket__total strong.is-quote { font: 500 22px/1.4 var(--sans); }

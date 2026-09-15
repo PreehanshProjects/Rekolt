@@ -31,7 +31,19 @@ let browser;
   page.on('response', r => { if (r.status() >= 400) errors.push(`${r.status()} ${r.url()}`); });
   await page.goto(baseURL, { waitUntil: 'networkidle' });
   await page.evaluate(() => document.fonts.ready);
-  assert.equal(await page.locator('.line').count(), 18);
+  assert.equal(await page.locator('.line').count(), 46);
+  const photoItems = ['queue-ail', 'queue', 'persil', 'coriandre', 'basilic', 'thym', 'romarin', 'menthe',
+    'melon-eau', 'orange', 'citron', 'limon', 'passion', 'dragon-fruit', 'papaye', 'fraise', 'framboise', 'blueberry',
+    'tomate', 'pomme-amour', 'ail', 'gingembre', 'courgette', 'poivron', 'celeri', 'poireau', 'carotte', 'laitue',
+    'betterave', 'piment', 'bok-choy', 'safran', 'chou-blanc', 'chou-rouge', 'patisson', 'giraumon', 'chouchou',
+    'barquette-herbes', 'sachet-herbes', 'fleur'];
+  for (const id of photoItems) assert.equal(await page.locator(`[data-id="${id}"]`).count(), 1, id);
+  assert.equal(await page.locator('.catalogue-products [data-onrequest="1"]').count(), 28);
+  assert.equal(await page.locator('[data-onrequest="1"][data-price]').count(), 0);
+  for (const [category, count] of Object.entries({ specialty: 4, fruits: 12, veg: 20, herbs: 8 })) {
+    assert.equal(await page.locator(`[data-category="${category}"] .line`).count(), count);
+    assert.equal(Number(await page.locator(`[data-filter="${category}"] span`).innerText()), count);
+  }
   await page.locator('.pasta__image').scrollIntoViewIfNeeded();
   await page.locator('.pasta__image img').evaluate(img => img.decode());
   await page.evaluate(() => window.scrollTo(0, 0));
@@ -39,7 +51,7 @@ let browser;
   await page.screenshot({ path: 'tmp/preview/desktop-hero.png' });
   await page.locator('[data-filter="fruits"]').click();
   assert.equal(await page.locator('[data-category]:visible').count(), 1);
-  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 3);
+  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 12);
   await page.locator('[data-id="ananas"] button').click();
   assert.equal(await page.locator('[data-docket-total]').innerText(), '85');
   await page.locator('[data-filter="herbs"]').click();
@@ -58,7 +70,7 @@ let browser;
   assert.match(copied, /Ananas ×2 pc/);
   assert.match(copied, /Menthe ×1 kg/);
   assert.match(copied, /Ravioli ×1 kg \(rate please\)/);
-  assert.match(copied, /Estimated total: Rs 570/);
+  assert.match(copied, /Estimated subtotal: Rs 570/);
   const orderUrl = new URL(await page.locator('[data-wa-link]').getAttribute('href'));
   assert.equal(orderUrl.origin, 'https://wa.me');
   assert.equal(orderUrl.pathname, '/23057563134');
@@ -99,11 +111,11 @@ let browser;
   await page.locator('[data-filter="fruits"]').click();
   assert.equal(await page.locator('[data-search-empty]').isVisible(), true);
   await page.locator('[data-search-reset]').click();
-  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 16);
+  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 44);
   await page.locator('[data-search]').fill('cilantro');
   assert.equal(await page.locator('[data-id="coriandre"]').isVisible(), true);
   await page.locator('[data-search-clear]').click();
-  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 16);
+  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 44);
 
   // One order workspace moves into the native modal, preserving quantities and input state.
   await page.setViewportSize({ width: 1440, height: 1000 });
@@ -171,14 +183,54 @@ let browser;
   const emptyUrl = new URL(await page.locator('[data-wa-link]').getAttribute('href'));
   assert.equal(emptyUrl.pathname, '/23057563134');
   assert.match(emptyUrl.searchParams.get('text'), /I would like to place an order/);
+
+  // New produce: unknown rates must not look free; preserve known and pending units.
+  for (const [term, id] of [['rosemary', 'romarin'], ['pomme d\'amour', 'pomme-amour'], ['pâtisson', 'patisson'], ['blueberries', 'blueberry']]) {
+    await page.locator('[data-search]').fill(term);
+    assert.equal(await page.locator(`[data-id="${id}"]`).isVisible(), true);
+  }
+  await page.locator('[data-search-clear]').click();
+  for (const id of ['tomate', 'melon-eau', 'blueberry', 'giraumon', 'sachet-herbes', 'basilic']) {
+    await page.locator(`[data-id="${id}"] button`).click();
+  }
+  await page.locator('[data-unit="500g"]').click();
+  assert.equal(await page.locator('[data-id="basilic"] .ask').innerText(), 'On request');
+  assert.equal(await page.locator('[data-docket-total]').innerText(), 'On request');
+  assert.equal(await page.locator('[data-total-currency]').isVisible(), false);
+  assert.equal(await page.locator('[data-tray-total]').innerText(), 'On request');
+  await page.getByRole('button', { name: 'More Tomate', exact: true }).click();
+  await page.locator('[data-copy]').click();
+  const quote = await page.evaluate(() => navigator.clipboard.readText());
+  assert.match(quote, /Tomate ×2 \(unit to confirm; rate please\)/);
+  assert.match(quote, /Melon d’Eau ×1 pc \(rate please\)/);
+  assert.match(quote, /Blueberry ×1 barquette \(rate please\)/);
+  assert.match(quote, /Giraumon ×1 kg \(rate please\)/);
+  assert.match(quote, /Sachet Herbes ×1 sachet \(rate please\)/);
+  assert.match(quote, /Pricing: on request/);
+  assert.doesNotMatch(quote, /Rs 0/);
+  assert.equal(new URL(await page.locator('[data-wa-link]').getAttribute('href')).searchParams.get('text'), quote.replace(/\r\n/g, '\n'));
+  await page.reload({ waitUntil: 'networkidle' });
+  assert.equal(await page.locator('[data-docket-total]').innerText(), 'On request');
+  assert.equal(await page.locator('[data-docket-id="tomate"] .stepper__val').innerText(), '2');
+  await page.locator('[data-id="orange"] button').click();
+  assert.equal(await page.locator('[data-docket-total]').innerText(), '45');
+  assert.equal(await page.locator('[data-total-label]').innerText(), 'Estimated subtotal');
+  assert.equal(await page.locator('[data-tray-total]').innerText(), '45 + quote');
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.locator('[data-filter="herbs"]').click();
+  await page.locator('[data-category="herbs"]').screenshot({ path: 'tmp/preview/new-herbs-mobile.png' });
+  await page.locator('.topnav__cta').click();
+  assert.ok(await dialog.evaluate(el => el.scrollWidth <= el.clientWidth));
+  await page.screenshot({ path: 'tmp/preview/new-order-mobile.png' });
+  await page.keyboard.press('Escape');
   assert.deepEqual(errors, []);
   const nojs = await browser.newContext({ javaScriptEnabled: false });
   const staticPage = await nojs.newPage();
   await staticPage.goto(baseURL);
-  assert.equal(await staticPage.locator('.line:visible').count(), 18);
+  assert.equal(await staticPage.locator('.line:visible').count(), 46);
   assert.equal(await staticPage.locator('[data-wa-link]').getAttribute('href'), 'https://wa.me/23057563134');
   await nojs.close();
-  console.log('PASS: 18 products, categories, add/remove, herb units, totals, pasta exclusion, clipboard, persistence, WhatsApp number and exact message, empty-order WhatsApp link, no-JS ordering link, readable text at eight viewport widths, images and no browser errors. Search aliases, empty states, modal editing, focus restoration, optional details and persistence verified. No messages sent.');
+  console.log('PASS: 46 products including all 40 photographed items; categories, search, quantities, units, priced/mixed/quote-only totals, clipboard, WhatsApp draft, persistence, modal accessibility, eight viewport widths and no-JS catalogue. No messages sent.');
 })().catch(error => { console.error(error); process.exitCode = 1; }).finally(async () => {
   if (browser) await browser.close();
   server.close();

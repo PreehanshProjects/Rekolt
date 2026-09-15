@@ -54,6 +54,14 @@ const CONFIG = {
     ananas: 'pineapple', coco: 'coconut', laitue: 'lettuce salad', concombre: 'cucumber',
     betterave: 'beet beetroot', ail: 'garlic', gingembre: 'ginger', menthe: 'mint',
     thym: 'thyme', coriandre: 'coriander cilantro cotomili', queue: 'spring onion scallion', persil: 'parsley',
+    'queue-ail': "queue d'ail garlic greens chives", basilic: 'basil', romarin: 'rosemary',
+    'melon-eau': "melon d'eau watermelon", citron: 'lemon', limon: 'lime',
+    passion: 'passion fruit', papaye: 'papaya', framboise: 'raspberries', blueberry: 'blueberries myrtilles',
+    tomate: 'tomatoes', 'pomme-amour': "pomme d'amour tomato tomatoes", celeri: 'celery',
+    carotte: 'carrot carrots', poireau: 'leek leeks', piment: 'chili chilli pepper',
+    'bok-choy': 'bok choi pak choy', patisson: 'patisson pattypan squash',
+    giraumon: 'giraumou pumpkin squash', chouchou: 'chayote chouchou', safran: 'saffran',
+    'barquette-herbes': 'barquette herb herbs garnish decor', 'sachet-herbes': 'sachet herb herbs garnish decor',
   };
   const normalize = (text) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
   function filterProduce() {
@@ -119,15 +127,19 @@ const CONFIG = {
 
   /** What one unit of this item is called, for the price row. */
   function rowUnitLabel(item) {
+    if (item.unitLabel === 'pending') return 'unit to confirm';
     if (item.variable) return state.unit === 'kg' ? 'per 1 kg' : 'per 500 g';
     if (item.unitLabel === 'kg') return 'per kg';
+    if (item.unitLabel === 'sachet') return 'per sachet';
     return item.unitLabel === 'barquette' ? 'per barquette' : 'per piece';
   }
 
   /** How a quantity of this item reads in an order list. */
   function qtyLabel(item, qty) {
+    if (item.unitLabel === 'pending') return String(qty);
     if (item.variable) return weightLabel(qty);
     if (item.unitLabel === 'kg') return `${qty} kg`;
+    if (item.unitLabel === 'sachet') return `${qty} ${qty === 1 ? 'sachet' : 'sachets'}`;
     if (item.unitLabel === 'barquette') return `${qty} ${qty === 1 ? 'barquette' : 'barquettes'}`;
     return `${qty} pc`;
   }
@@ -172,7 +184,7 @@ const CONFIG = {
       if (!item.variable) return;
       const priceSlot = $('[data-price-slot]', item.el);
       const unitSlot  = $('[data-unit-slot]', item.el);
-      if (priceSlot) priceSlot.textContent = rs(unitPrice(item));
+      if (priceSlot && !item.onRequest) priceSlot.textContent = rs(unitPrice(item));
       if (unitSlot)  unitSlot.textContent  = rowUnitLabel(item);
     });
   }
@@ -291,6 +303,10 @@ const CONFIG = {
     return false;
   }
 
+  function hasPricedItems() {
+    return [...state.order.keys()].some(id => !catalogue.get(id).onRequest);
+  }
+
   function renderDocket() {
     docketLines.textContent = '';
     const count = state.order.size;
@@ -316,7 +332,7 @@ const CONFIG = {
       const unit = document.createElement('span');
       unit.className = 'dline__unit';
       unit.textContent = item.onRequest
-        ? `${qtyLabel(item, qty)} · rate confirmed on order`
+        ? `${qtyLabel(item, qty)}${item.unitLabel === 'pending' ? ' · unit to confirm' : ''} · rate confirmed on order`
         : `${qtyLabel(item, qty)} · Rs ${rs(unitPrice(item))} ${rowUnitLabel(item).replace('per ', '/ ')}`;
       name.append(unit);
 
@@ -371,7 +387,11 @@ const CONFIG = {
     });
 
     const sum = total();
-    totalSlot.textContent = rs(sum);
+    const quoteOnly = count > 0 && !hasPricedItems();
+    totalSlot.textContent = quoteOnly ? 'On request' : rs(sum);
+    $('[data-total-currency]').hidden = quoteOnly;
+    $('[data-total-label]').textContent = quoteOnly ? 'Pricing' : hasOnRequest() ? 'Estimated subtotal' : 'Estimated total';
+    totalSlot.parentElement.classList.toggle('is-quote', quoteOnly);
 
     const askNote = $('[data-ask-note]');
     if (askNote) askNote.hidden = !hasOnRequest();
@@ -380,7 +400,8 @@ const CONFIG = {
     tray.hidden = count === 0;
     $('[data-tray-count]').textContent = String(count);
     $('[data-tray-word]').textContent = count === 1 ? 'item' : 'items';
-    $('[data-tray-total]').textContent = rs(sum);
+    $('[data-tray-total]').textContent = quoteOnly ? 'On request' : `${rs(sum)}${hasOnRequest() ? ' + quote' : ''}`;
+    $('[data-tray-currency]').hidden = quoteOnly;
 
     wireWhatsApp();
   }
@@ -428,12 +449,18 @@ const CONFIG = {
     state.order.forEach((qty, id) => {
       const item = catalogue.get(id);
       if (!item) return;
-      const ask = item.onRequest ? ' (rate please)' : '';
+      const ask = item.onRequest
+        ? item.unitLabel === 'pending' ? ' (unit to confirm; rate please)' : ' (rate please)'
+        : '';
       lines.push(`${i++}. ${item.name} ×${qtyLabel(item, qty)}${ask}`);
     });
 
-    lines.push('', `Estimated total: Rs ${rs(total())}`);
-    if (hasOnRequest()) lines.push('(excludes lines marked "rate please")');
+    if (hasPricedItems()) {
+      lines.push('', `Estimated ${hasOnRequest() ? 'subtotal' : 'total'}: Rs ${rs(total())}`);
+      if (hasOnRequest()) lines.push('(excludes lines marked "rate please")');
+    } else {
+      lines.push('', 'Pricing: on request. Please confirm prices for the items above.');
+    }
     if (state.notes.trim()) lines.push('', `Notes: ${state.notes.trim()}`);
     return lines.join('\n');
   }
