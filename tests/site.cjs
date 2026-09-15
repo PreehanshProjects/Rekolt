@@ -31,16 +31,16 @@ let browser;
   page.on('response', r => { if (r.status() >= 400) errors.push(`${r.status()} ${r.url()}`); });
   await page.goto(baseURL, { waitUntil: 'networkidle' });
   await page.evaluate(() => document.fonts.ready);
-  assert.equal(await page.locator('.line').count(), 46);
+  assert.equal(await page.locator('.line').count(), 45);
   const photoItems = ['queue-ail', 'queue', 'persil', 'coriandre', 'basilic', 'thym', 'romarin', 'menthe',
     'melon-eau', 'orange', 'citron', 'limon', 'passion', 'dragon-fruit', 'papaye', 'fraise', 'framboise', 'blueberry',
     'tomate', 'pomme-amour', 'ail', 'gingembre', 'courgette', 'poivron', 'celeri', 'poireau', 'carotte', 'laitue',
     'betterave', 'piment', 'bok-choy', 'safran', 'chou-blanc', 'chou-rouge', 'patisson', 'giraumon', 'chouchou',
     'barquette-herbes', 'sachet-herbes', 'fleur'];
   for (const id of photoItems) assert.equal(await page.locator(`[data-id="${id}"]`).count(), 1, id);
-  assert.equal(await page.locator('.catalogue-products [data-onrequest="1"]').count(), 28);
+  assert.equal(await page.locator('.catalogue-products [data-onrequest="1"]').count(), 27);
   assert.equal(await page.locator('[data-onrequest="1"][data-price]').count(), 0);
-  for (const [category, count] of Object.entries({ specialty: 4, fruits: 12, veg: 20, herbs: 8 })) {
+  for (const [category, count] of Object.entries({ specialty: 3, fruits: 12, veg: 20, herbs: 8 })) {
     assert.equal(await page.locator(`[data-category="${category}"] .line`).count(), count);
     assert.equal(Number(await page.locator(`[data-filter="${category}"] span`).innerText()), count);
   }
@@ -111,11 +111,11 @@ let browser;
   await page.locator('[data-filter="fruits"]').click();
   assert.equal(await page.locator('[data-search-empty]').isVisible(), true);
   await page.locator('[data-search-reset]').click();
-  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 44);
+  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 43);
   await page.locator('[data-search]').fill('cilantro');
   assert.equal(await page.locator('[data-id="coriandre"]').isVisible(), true);
   await page.locator('[data-search-clear]').click();
-  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 44);
+  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 43);
 
   // One order workspace moves into the native modal, preserving quantities and input state.
   await page.setViewportSize({ width: 1440, height: 1000 });
@@ -223,14 +223,28 @@ let browser;
   assert.ok(await dialog.evaluate(el => el.scrollWidth <= el.clientWidth));
   await page.screenshot({ path: 'tmp/preview/new-order-mobile.png' });
   await page.keyboard.press('Escape');
+  // Saved orders using the former English product keep their quantities under the French name.
+  await page.evaluate(() => localStorage.setItem('rekolt.order.v1', JSON.stringify({
+    order: [['microgreen', 2], ['barquette-herbes', 1]],
+  })));
+  await page.reload({ waitUntil: 'networkidle' });
+  await page.locator('[data-search]').fill('micro green');
+  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 1);
+  assert.equal(await page.locator('[data-id="barquette-herbes"]').isVisible(), true);
+  assert.equal(await page.locator('[data-id="microgreen"]').count(), 0);
+  assert.equal(await page.locator('[data-docket-id="barquette-herbes"] .stepper__val').innerText(), '3 barquettes');
+  assert.equal(await page.locator('[data-docket-total]').innerText(), '6,000');
+  const mergedMessage = new URL(await page.locator('[data-wa-link]').getAttribute('href')).searchParams.get('text');
+  assert.match(mergedMessage, /Barquette Herbes ×3 barquettes/);
+  assert.doesNotMatch(mergedMessage, /Micro Green|rate please/);
   assert.deepEqual(errors, []);
   const nojs = await browser.newContext({ javaScriptEnabled: false });
   const staticPage = await nojs.newPage();
   await staticPage.goto(baseURL);
-  assert.equal(await staticPage.locator('.line:visible').count(), 46);
+  assert.equal(await staticPage.locator('.line:visible').count(), 45);
   assert.equal(await staticPage.locator('[data-wa-link]').getAttribute('href'), 'https://wa.me/23057563134');
   await nojs.close();
-  console.log('PASS: 46 products including all 40 photographed items; categories, search, quantities, units, priced/mixed/quote-only totals, clipboard, WhatsApp draft, persistence, modal accessibility, eight viewport widths and no-JS catalogue. No messages sent.');
+  console.log('PASS: 45 products including all 40 photographed items; categories, search, quantities, units, priced/mixed/quote-only totals, clipboard, WhatsApp draft, persistence, modal accessibility, eight viewport widths and no-JS catalogue. No messages sent.');
 })().catch(error => { console.error(error); process.exitCode = 1; }).finally(async () => {
   if (browser) await browser.close();
   server.close();

@@ -50,7 +50,7 @@ const CONFIG = {
 
   const search = $('[data-search]');
   const aliases = {
-    microgreen: 'microgreens sprouts', fleur: 'edible flowers', fraise: 'strawberry strawberries',
+    fleur: 'edible flowers', fraise: 'strawberry strawberries',
     ananas: 'pineapple', coco: 'coconut', laitue: 'lettuce salad', concombre: 'cucumber',
     betterave: 'beet beetroot', ail: 'garlic', gingembre: 'ginger', menthe: 'mint',
     thym: 'thyme', coriandre: 'coriander cilantro cotomili', queue: 'spring onion scallion', persil: 'parsley',
@@ -61,7 +61,7 @@ const CONFIG = {
     carotte: 'carrot carrots', poireau: 'leek leeks', piment: 'chili chilli pepper',
     'bok-choy': 'bok choi pak choy', patisson: 'patisson pattypan squash',
     giraumon: 'giraumou pumpkin squash', chouchou: 'chayote chouchou', safran: 'saffran',
-    'barquette-herbes': 'barquette herb herbs garnish decor', 'sachet-herbes': 'sachet herb herbs garnish decor',
+    'barquette-herbes': 'barquette herb herbs garnish decor micro green microgreens sprouts', 'sachet-herbes': 'sachet herb herbs garnish decor',
   };
   const normalize = (text) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
   function filterProduce() {
@@ -166,7 +166,10 @@ const CONFIG = {
       if (typeof data.notes === 'string') state.notes = data.notes.slice(0, 600);
       if (Array.isArray(data.order)) {
         data.order.forEach(([id, qty]) => {
-          if (catalogue.has(id) && Number.isInteger(qty) && qty > 0 && qty <= 200) state.order.set(id, qty);
+          const currentId = id === 'microgreen' ? 'barquette-herbes' : id;
+          if (catalogue.has(currentId) && Number.isInteger(qty) && qty > 0 && qty <= 200) {
+            state.order.set(currentId, Math.min(200, (state.order.get(currentId) || 0) + qty));
+          }
         });
       }
     } catch (_) { /* corrupt payload — start clean */ }
