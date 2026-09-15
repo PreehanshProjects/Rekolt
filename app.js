@@ -51,16 +51,14 @@ const CONFIG = {
   const search = $('[data-search]');
   const aliases = {
     fleur: 'edible flowers', fraise: 'strawberry strawberries',
-    ananas: 'pineapple', coco: 'coconut', laitue: 'lettuce salad', concombre: 'cucumber',
-    betterave: 'beet beetroot', ail: 'garlic', gingembre: 'ginger', menthe: 'mint',
-    thym: 'thyme', coriandre: 'coriander cilantro cotomili', queue: 'spring onion scallion', persil: 'parsley',
-    'queue-ail': "queue d'ail garlic greens chives", basilic: 'basil', romarin: 'rosemary',
-    'melon-eau': "melon d'eau watermelon", citron: 'lemon', limon: 'lime',
-    passion: 'passion fruit', papaye: 'papaya', framboise: 'raspberries', blueberry: 'blueberries myrtilles',
-    tomate: 'tomatoes', 'pomme-amour': "pomme d'amour tomato tomatoes", celeri: 'celery',
-    carotte: 'carrot carrots', poireau: 'leek leeks', piment: 'chili chilli pepper',
-    'bok-choy': 'bok choi pak choy', patisson: 'patisson pattypan squash',
-    giraumon: 'giraumou pumpkin squash', chouchou: 'chayote chouchou', safran: 'saffran',
+    laitue: 'lettuce lettue salad', betterave: 'beet beetroot bettrave', ail: 'garlic', gingembre: 'ginger', menthe: 'mint',
+    coriandre: 'coriander cilantro cotomili coriande', queue: "spring onion scallion queue d'ognion", persil: 'parsley',
+    'queue-ail': "queue d'ail garlic greens chives", basilic: 'basil',
+    'melon-eau': "melon d'eau watermelon", citron: 'lemon',
+    passion: 'passion fruit', papaye: 'papaya', framboise: 'raspberries', blueberry: 'blue berry blueberries myrtilles',
+    tomate: 'tomatoes', 'pomme-amour': "pomme d'amour tomato tomatoes",
+    carotte: 'carrot carrots', piment: 'chili chilli pepper',
+    'bok-choy': 'bok choi pak choy', safran: 'saffran',
     'barquette-herbes': 'barquette herb herbs garnish decor micro green microgreens sprouts', 'sachet-herbes': 'sachet herb herbs garnish decor',
   };
   const normalize = (text) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();

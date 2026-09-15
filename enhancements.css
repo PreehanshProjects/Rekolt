@@ -189,3 +189,19 @@ h2, .tenet h3 { text-wrap: balance; }
 }
 .line__price .ask { font: 400 13px/1.4 var(--sans); white-space: normal; text-align: right; }
 .docket__total strong.is-quote { font: 500 22px/1.4 var(--sans); }
+
+/* The full pasta menu follows the introduction at a comfortable reading width. */
+.pasta-menu { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 64px; padding: 48px var(--gutter) 72px; }
+.pasta-menu__group { min-width: 0; }
+.pasta-menu__group h3, .pasta-dough h3 { font: 400 32px/1.2 var(--serif); }
+.pasta-menu__group header p { margin-top: 8px; color: var(--muted); font-size: 14px; }
+.pasta-menu .lines { margin-top: 20px; }
+.pasta-dough { margin-top: 30px; border-top: 1px solid var(--rule); padding-top: 24px; }
+.pasta-dough h3 { font-size: 26px; }
+.pasta-dough ul { list-style: none; padding: 0; margin: 18px 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.pasta-dough li { border: 1px solid var(--rule); padding: 9px 12px; font-size: 14px; }
+.pasta-dough li span { display: block; color: var(--muted); font-size: 12px; margin-top: 4px; }
+.pasta-dough > p { color: var(--muted); font-size: 14px; line-height: 1.8; }
+@media (max-width: 800px) {
+  .pasta-menu { grid-template-columns: 1fr; padding-top: 0; gap: 36px; }
+}

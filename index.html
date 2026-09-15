@@ -44,20 +44,20 @@
     <div class="catalogue-layout">
       <aside class="catalogue-sidebar">
         <p class="eyebrow">BROWSE THE RANGE</p>
-        <nav class="category-nav" aria-label="Produce categories"><a href="#prices" data-filter="all" aria-current="true">All produce <span>43</span></a><a href="#category-specialty" data-filter="specialty">Specialty &amp; garnish <span>03</span></a><a href="#category-fruits" data-filter="fruits">Fruits <span>12</span></a><a href="#category-veg" data-filter="veg">Vegetables <span>20</span></a><a href="#category-herbs" data-filter="herbs">Herbs &amp; aromatics <span>08</span></a><a href="#pasta">Fresh pasta <span>↗</span></a></nav>
+        <nav class="category-nav" aria-label="Produce categories"><a href="#prices" data-filter="all" aria-current="true">All produce <span>30</span></a><a href="#category-specialty" data-filter="specialty">Specialty &amp; garnish <span>03</span></a><a href="#category-fruits" data-filter="fruits">Fruits <span>09</span></a><a href="#category-veg" data-filter="veg">Vegetables <span>12</span></a><a href="#category-herbs" data-filter="herbs">Herbs &amp; aromatics <span>06</span></a><a href="#pasta">Fresh pasta <span>↗</span></a></nav>
         <div class="catalogue-note"><span class="catalogue-note__symbol" aria-hidden="true">↗</span><p>A list that works <br>the way you do.</p><span>Select an ingredient to add it. <br>Review quantities in your order.</span></div>
       </aside>
       <div class="catalogue-products">
         <div class="catalogue-tools" data-catalogue-tools hidden>
           <label class="search-field" for="produce-search"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.5"/></svg><span class="sr-only">Search produce in English or French</span><input id="produce-search" type="search" placeholder="Find an ingredient…" autocomplete="off" spellcheck="false" data-search><button type="button" class="search-clear" data-search-clear hidden aria-label="Clear search">×</button></label>
-          <p class="search-count" data-search-count role="status" aria-live="polite">43 ingredients</p>
+          <p class="search-count" data-search-count role="status" aria-live="polite">30 ingredients</p>
         </div>
         <div class="search-empty" data-search-empty hidden><p class="eyebrow">LET’S FIND WHAT YOU NEED</p><h3>No matching ingredients.</h3><p>Try another name, or ask us about your request on WhatsApp.</p><div><button type="button" class="text-action" data-search-reset>Show all produce <span aria-hidden="true">↗</span></button><a href="https://wa.me/23057563134" target="_blank" rel="noopener noreferrer">Ask Rekolt ↗</a></div></div>
         <div class="unitbar"><p>PRICES IN MAURITIAN RUPEES <span>· MUR</span></p><div class="unitbar__control"><span>Weight unit</span><div class="segmented" role="group" aria-label="Choose herb and aromatic weight unit"><button type="button" class="segmented__btn is-active" data-unit="500g" aria-pressed="true">500 g</button><button type="button" class="segmented__btn" data-unit="kg" aria-pressed="false">1 kg</button></div></div></div>
         <div class="catalogue-groups"><section class="group" id="category-specialty" data-category="specialty" aria-labelledby="g-specialty">
       <header class="group__head"><span class="group__number">01</span>
         <h3 id="g-specialty">Specialty &amp; Garnish</h3>
-        <p>Microgreens, herbs for garnish &amp; edible flowers.</p>
+        <p>Barquette herbs, edible flowers &amp; mixed herb sachets.</p>
       </header>
       <ul class="lines">
         <li class="line" data-id="barquette-herbes" data-name="Barquette Herbes" data-unit-label="barquette" data-price="2000">
@@ -68,19 +68,19 @@
             <span class="line__add" aria-hidden="true"></span>
           </button>
         </li>
-        <li class="line" data-id="sachet-herbes" data-name="Sachet Herbes" data-unit-label="sachet" data-onrequest="1">
+        <li class="line" data-id="fleur" data-name="Fleurs Comestibles" data-unit-label="barquette" data-price="250">
           <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Sachet Herbes</span><span class="line__latin">Herbs for garnish</span></span>
-            <span class="line__unit">per sachet</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
+            <span class="line__id"><span class="line__name">Fleurs Comestibles</span><span class="line__latin">assorted varieties</span></span>
+            <span class="line__unit">per barquette</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">250</span></span>
             <span class="line__add" aria-hidden="true"></span>
           </button>
         </li>
-        <li class="line" data-id="fleur" data-name="Fleur Comestible" data-unit-label="barquette" data-price="250">
+        <li class="line" data-id="sachet-herbes" data-name="Herbes Mix Sachet" data-unit-label="sachet" data-onrequest="1">
           <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Fleur Comestible</span><span class="line__latin">assorted varieties</span></span>
-            <span class="line__unit">per barquette</span>
-            <span class="line__price"><span class="rs">Rs</span><span class="num">250</span></span>
+            <span class="line__id"><span class="line__name">Herbes Mix Sachet</span><span class="line__latin">Herbs for garnish</span></span>
+            <span class="line__unit">per sachet</span>
+            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
             <span class="line__add" aria-hidden="true"></span>
           </button>
         </li>
@@ -92,57 +92,9 @@
         <p>Whole fruit &amp; berries. Units listed below.</p>
       </header>
       <ul class="lines">
-        <li class="line" data-id="melon-eau" data-name="Melon d’Eau" data-unit-label="pc" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Melon d’Eau</span><span class="line__latin">Watermelon</span></span>
-            <span class="line__unit">per piece</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="orange" data-name="Orange" data-unit-label="pc" data-price="45">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Orange</span><span class="line__latin">Citrus × sinensis</span></span>
-            <span class="line__unit">per piece</span>
-            <span class="line__price"><span class="rs">Rs</span><span class="num">45</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
         <li class="line" data-id="citron" data-name="Citron" data-unit-label="pc" data-onrequest="1">
           <button type="button" class="line__btn">
             <span class="line__id"><span class="line__name">Citron</span></span>
-            <span class="line__unit">per piece</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="limon" data-name="Limon" data-unit-label="pc" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Limon</span></span>
-            <span class="line__unit">per piece</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="passion" data-name="Fruit de la Passion" data-unit-label="pc" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Fruit de la Passion</span><span class="line__latin">Passion fruit</span></span>
-            <span class="line__unit">per piece</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="dragon-fruit" data-name="Dragon Fruit" data-unit-label="pc" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Dragon Fruit</span><span class="line__latin">Pitaya</span></span>
-            <span class="line__unit">per piece</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="papaye" data-name="Papaye" data-unit-label="pc" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Papaye</span><span class="line__latin">Papaya</span></span>
             <span class="line__unit">per piece</span>
             <span class="line__price line__price--ask"><span class="ask">On request</span></span>
             <span class="line__add" aria-hidden="true"></span>
@@ -153,6 +105,14 @@
             <span class="line__id"><span class="line__name">Fraise</span><span class="line__latin">Fragaria × ananassa</span></span>
             <span class="line__unit">per barquette</span>
             <span class="line__price"><span class="rs">Rs</span><span class="num">300</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="passion" data-name="Fruit de la Passion" data-unit-label="pc" data-onrequest="1">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Fruit de la Passion</span><span class="line__latin">Passion fruit</span></span>
+            <span class="line__unit">per piece</span>
+            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
             <span class="line__add" aria-hidden="true"></span>
           </button>
         </li>
@@ -172,19 +132,35 @@
             <span class="line__add" aria-hidden="true"></span>
           </button>
         </li>
-        <li class="line" data-id="ananas" data-name="Ananas" data-unit-label="pc" data-price="85">
+        <li class="line" data-id="papaye" data-name="Papaye" data-unit-label="pc" data-onrequest="1">
           <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Ananas</span><span class="line__latin">Ananas comosus</span></span>
+            <span class="line__id"><span class="line__name">Papaye</span><span class="line__latin">Papaya</span></span>
             <span class="line__unit">per piece</span>
-            <span class="line__price"><span class="rs">Rs</span><span class="num">85</span></span>
+            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
             <span class="line__add" aria-hidden="true"></span>
           </button>
         </li>
-        <li class="line" data-id="coco" data-name="Coco Sec" data-unit-label="pc" data-price="60">
+        <li class="line" data-id="melon-eau" data-name="Melon d’Eau" data-unit-label="pc" data-onrequest="1">
           <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Coco Sec</span><span class="line__latin">Cocos nucifera</span></span>
+            <span class="line__id"><span class="line__name">Melon d’Eau</span><span class="line__latin">Watermelon</span></span>
             <span class="line__unit">per piece</span>
-            <span class="line__price"><span class="rs">Rs</span><span class="num">60</span></span>
+            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="dragon-fruit" data-name="Dragon Fruit" data-unit-label="pc" data-onrequest="1">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Dragon Fruit</span><span class="line__latin">Pitaya</span></span>
+            <span class="line__unit">per piece</span>
+            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="orange" data-name="Orange" data-unit-label="pc" data-price="45">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Orange</span><span class="line__latin">Citrus × sinensis</span></span>
+            <span class="line__unit">per piece</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">45</span></span>
             <span class="line__add" aria-hidden="true"></span>
           </button>
         </li>
@@ -196,6 +172,22 @@
         <p>Everyday essentials. Units listed where confirmed.</p>
       </header>
       <ul class="lines">
+        <li class="line" data-id="laitue" data-name="Laitue" data-unit-label="pc" data-price="30">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Laitue</span><span class="line__latin">Lactuca sativa</span></span>
+            <span class="line__unit">per piece</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">30</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="betterave" data-name="Betterave" data-unit-label="pc" data-price="45">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Betterave</span><span class="line__latin">Beta vulgaris</span></span>
+            <span class="line__unit">per piece</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">45</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
         <li class="line" data-id="tomate" data-name="Tomate" data-unit-label="pending" data-onrequest="1">
           <button type="button" class="line__btn">
             <span class="line__id"><span class="line__name">Tomate</span><span class="line__latin">Tomato</span></span>
@@ -207,6 +199,14 @@
         <li class="line" data-id="pomme-amour" data-name="Pomme d’Amour" data-unit-label="pending" data-onrequest="1">
           <button type="button" class="line__btn">
             <span class="line__id"><span class="line__name">Pomme d’Amour</span></span>
+            <span class="line__unit">Unit to confirm</span>
+            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="piment" data-name="Piment" data-unit-label="pending" data-onrequest="1">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Piment</span><span class="line__latin">Chilli</span></span>
             <span class="line__unit">Unit to confirm</span>
             <span class="line__price line__price--ask"><span class="ask">On request</span></span>
             <span class="line__add" aria-hidden="true"></span>
@@ -228,70 +228,6 @@
             <span class="line__add" aria-hidden="true"></span>
           </button>
         </li>
-        <li class="line" data-id="courgette" data-name="Courgette" data-unit-label="pc" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Courgette</span><span class="line__latin">Zucchini</span></span>
-            <span class="line__unit">per piece</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="poivron" data-name="Poivron" data-unit-label="pending" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Poivron</span><span class="line__latin">Bell pepper</span></span>
-            <span class="line__unit">Unit to confirm</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="celeri" data-name="Céleri" data-unit-label="pending" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Céleri</span><span class="line__latin">Celery</span></span>
-            <span class="line__unit">Unit to confirm</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="poireau" data-name="Poireau" data-unit-label="pending" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Poireau</span><span class="line__latin">Leek</span></span>
-            <span class="line__unit">Unit to confirm</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="carotte" data-name="Carotte" data-unit-label="pending" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Carotte</span><span class="line__latin">Carrot</span></span>
-            <span class="line__unit">Unit to confirm</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="laitue" data-name="Laitue" data-unit-label="pc" data-price="30">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Laitue</span><span class="line__latin">Lactuca sativa</span></span>
-            <span class="line__unit">per piece</span>
-            <span class="line__price"><span class="rs">Rs</span><span class="num">30</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="betterave" data-name="Betterave" data-unit-label="pc" data-price="45">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Betterave</span><span class="line__latin">Beta vulgaris</span></span>
-            <span class="line__unit">per piece</span>
-            <span class="line__price"><span class="rs">Rs</span><span class="num">45</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="piment" data-name="Piment" data-unit-label="pending" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Piment</span><span class="line__latin">Chilli</span></span>
-            <span class="line__unit">Unit to confirm</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
         <li class="line" data-id="bok-choy" data-name="Bok Choy" data-unit-label="pending" data-onrequest="1">
           <button type="button" class="line__btn">
             <span class="line__id"><span class="line__name">Bok Choy</span><span class="line__latin">Pak choi</span></span>
@@ -303,6 +239,14 @@
         <li class="line" data-id="safran" data-name="Safran" data-unit-label="pending" data-onrequest="1">
           <button type="button" class="line__btn">
             <span class="line__id"><span class="line__name">Safran</span></span>
+            <span class="line__unit">Unit to confirm</span>
+            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="carotte" data-name="Carotte" data-unit-label="pending" data-onrequest="1">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Carotte</span><span class="line__latin">Carrot</span></span>
             <span class="line__unit">Unit to confirm</span>
             <span class="line__price line__price--ask"><span class="ask">On request</span></span>
             <span class="line__add" aria-hidden="true"></span>
@@ -324,38 +268,6 @@
             <span class="line__add" aria-hidden="true"></span>
           </button>
         </li>
-        <li class="line" data-id="patisson" data-name="Pâtisson" data-unit-label="pc" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Pâtisson</span><span class="line__latin">Pattypan squash</span></span>
-            <span class="line__unit">per piece</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="giraumon" data-name="Giraumon" data-unit-label="kg" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Giraumon</span><span class="line__latin">Pumpkin</span></span>
-            <span class="line__unit">per kg</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="chouchou" data-name="Chou Chou" data-unit-label="kg" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Chou Chou</span><span class="line__latin">Chayote</span></span>
-            <span class="line__unit">per kg</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="concombre" data-name="Concombre Vert" data-unit-label="pc" data-price="25">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Concombre Vert</span><span class="line__latin">Cucumis sativus</span></span>
-            <span class="line__unit">per piece</span>
-            <span class="line__price"><span class="rs">Rs</span><span class="num">25</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
       </ul>
     </section>
 <section class="group group--herbs" id="category-herbs" data-category="herbs" aria-labelledby="g-herbs">
@@ -364,14 +276,6 @@
         <p>Kitchen herbs. Units listed where confirmed.</p>
       </header>
       <ul class="lines">
-        <li class="line" data-id="queue-ail" data-name="Queue d’Ail" data-unit-label="pending" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Queue d’Ail</span><span class="line__latin">Garlic greens</span></span>
-            <span class="line__unit">Unit to confirm</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
         <li class="line" data-id="queue" data-name="Queue d'Oignon" data-variable="1" data-price500="190" data-pricekg="380">
           <button type="button" class="line__btn">
             <span class="line__id"><span class="line__name">Queue d'Oignon</span><span class="line__latin">Allium cepa</span></span>
@@ -380,41 +284,9 @@
             <span class="line__add" aria-hidden="true"></span>
           </button>
         </li>
-        <li class="line" data-id="persil" data-name="Persil" data-variable="1" data-price500="250" data-pricekg="500">
+        <li class="line" data-id="queue-ail" data-name="Queue d’Ail" data-unit-label="pending" data-onrequest="1">
           <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Persil</span><span class="line__latin">Petroselinum crispum</span></span>
-            <span class="line__unit" data-unit-slot>per 500 g</span>
-            <span class="line__price"><span class="rs">Rs</span><span class="num" data-price-slot>250</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="coriandre" data-name="Coriandre" data-variable="1" data-price500="190" data-pricekg="380">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Coriandre</span><span class="line__latin">Coriandrum sativum</span></span>
-            <span class="line__unit" data-unit-slot>per 500 g</span>
-            <span class="line__price"><span class="rs">Rs</span><span class="num" data-price-slot>190</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="basilic" data-name="Basilic" data-unit-label="pending" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Basilic</span><span class="line__latin">Basil</span></span>
-            <span class="line__unit">Unit to confirm</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="thym" data-name="Thym" data-variable="1" data-price500="250" data-pricekg="500">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Thym</span><span class="line__latin">Thymus vulgaris</span></span>
-            <span class="line__unit" data-unit-slot>per 500 g</span>
-            <span class="line__price"><span class="rs">Rs</span><span class="num" data-price-slot>250</span></span>
-            <span class="line__add" aria-hidden="true"></span>
-          </button>
-        </li>
-        <li class="line" data-id="romarin" data-name="Romarin" data-unit-label="pending" data-onrequest="1">
-          <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Romarin</span><span class="line__latin">Rosemary</span></span>
+            <span class="line__id"><span class="line__name">Queue d’Ail</span><span class="line__latin">Garlic greens</span></span>
             <span class="line__unit">Unit to confirm</span>
             <span class="line__price line__price--ask"><span class="ask">On request</span></span>
             <span class="line__add" aria-hidden="true"></span>
@@ -428,6 +300,30 @@
             <span class="line__add" aria-hidden="true"></span>
           </button>
         </li>
+        <li class="line" data-id="coriandre" data-name="Coriandre" data-variable="1" data-price500="190" data-pricekg="380">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Coriandre</span><span class="line__latin">Coriandrum sativum</span></span>
+            <span class="line__unit" data-unit-slot>per 500 g</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num" data-price-slot>190</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="persil" data-name="Persil" data-variable="1" data-price500="250" data-pricekg="500">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Persil</span><span class="line__latin">Petroselinum crispum</span></span>
+            <span class="line__unit" data-unit-slot>per 500 g</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num" data-price-slot>250</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="basilic" data-name="Basilic" data-unit-label="pending" data-onrequest="1">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Basilic</span><span class="line__latin">Basil</span></span>
+            <span class="line__unit">Unit to confirm</span>
+            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
       </ul>
     </section></div>
         <p class="prices__note">Items marked “On request” are awaiting prices. Add them to your list for a quote. Units marked “To confirm” will be agreed when ordering. Prices and availability are confirmed with your order.</p>
@@ -436,24 +332,143 @@
   </section>
   <section class="pasta" id="pasta" aria-labelledby="pasta-title">
     <figure class="pasta__image"><img src="assets/editorial/fresh-ravioli.webp" width="1536" height="1024" alt="Editorial close-up of uncooked ravioli on a flour-dusted surface." loading="lazy" decoding="async"><figcaption>THE ART OF KEEPING IT SIMPLE</figcaption></figure>
-    <div class="pasta__text"><p class="eyebrow">ALSO FROM OUR KITCHEN</p><h2 id="pasta-title">Freshly made. <br><em>For your menu.</em></h2><p>Fresh pasta, made in-house to order. Ravioli and lasagne sheets, ready for your kitchen’s own expression.</p><ul class="lines">
-        <li class="line" data-id="ravioli" data-name="Ravioli" data-unit-label="kg" data-onrequest="1">
+    <div class="pasta__text"><p class="eyebrow">ALSO FROM OUR KITCHEN</p><h2 id="pasta-title">Freshly made. <br><em>For your menu.</em></h2><p>Explore our Veg, Terre and Mer selection, plus spaghetti and pappardelle. Fresh pasta, made in-house to order.</p><p class="pasta__note">All pasta prices are in Mauritian rupees, per kilogram. Select a variety below to add it to your order.</p>
+      <div class="pasta-dough" aria-labelledby="dough-title"><h3 id="dough-title">Pasta dough flavours</h3><ul><li>Épinard <span>Spinach</span></li><li>Encre de Seiche <span>Squid ink</span></li><li>Betterave <span>Beetroot</span></li><li>Pâte Classique <span>Classic dough</span></li><li>Chocolat <span>Chocolate</span></li></ul><p>Add your preferred dough flavour and the pasta it’s for in your order notes. We’ll confirm the combination and final price with you.</p></div>
+    </div>
+    <div class="pasta-menu">
+      <section class="pasta-menu__group" aria-labelledby="pasta-veg-title">
+        <header><h3 id="pasta-veg-title">Veg</h3><p>Épinard &amp; ricotta.</p></header>
+        <ul class="lines">
+        <li class="line" data-id="pasta-epinard-ricotta" data-name="Pasta — Épinard &amp; Ricotta" data-unit-label="kg" data-price="350">
           <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Ravioli</span><span class="line__latin">fresh, filled to order</span></span>
+            <span class="line__id"><span class="line__name">Épinard &amp; Ricotta</span></span>
             <span class="line__unit">per kg</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">350</span></span>
             <span class="line__add" aria-hidden="true"></span>
           </button>
         </li>
-        <li class="line" data-id="lasagne" data-name="Lasagne Sheets" data-unit-label="kg" data-onrequest="1">
+        </ul>
+      </section>
+      <section class="pasta-menu__group" aria-labelledby="pasta-terre-title">
+        <header><h3 id="pasta-terre-title">Terre</h3><p>Poulet, agneau &amp; foie gras.</p></header>
+        <ul class="lines">
+        <li class="line" data-id="pasta-poulet" data-name="Pasta — Poulet" data-unit-label="kg" data-price="450">
           <button type="button" class="line__btn">
-            <span class="line__id"><span class="line__name">Lasagne Sheets</span><span class="line__latin">fresh, rolled to order</span></span>
+            <span class="line__id"><span class="line__name">Poulet</span></span>
             <span class="line__unit">per kg</span>
-            <span class="line__price line__price--ask"><span class="ask">On request</span></span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">450</span></span>
             <span class="line__add" aria-hidden="true"></span>
           </button>
         </li>
-      </ul><p class="pasta__note">Sold by the kilogram. Ask us about rates and available fillings.</p></div>
+        <li class="line" data-id="pasta-agneau" data-name="Pasta — Agneau" data-unit-label="kg" data-price="550">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Agneau</span></span>
+            <span class="line__unit">per kg</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">550</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="pasta-foie-gras" data-name="Pasta — Foie Gras" data-unit-label="kg" data-price="750">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Foie Gras</span></span>
+            <span class="line__unit">per kg</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">750</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        </ul>
+      </section>
+      <section class="pasta-menu__group" aria-labelledby="pasta-mer-title">
+        <header><h3 id="pasta-mer-title">Mer</h3><p>Poissons &amp; fruits de mer.</p></header>
+        <ul class="lines">
+        <li class="line" data-id="pasta-crevette" data-name="Pasta — Crevette" data-unit-label="kg" data-price="550">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Crevette</span></span>
+            <span class="line__unit">per kg</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">550</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="pasta-calamar" data-name="Pasta — Calamar" data-unit-label="kg" data-price="550">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Calamar</span></span>
+            <span class="line__unit">per kg</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">550</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="pasta-poisson" data-name="Pasta — Poisson" data-unit-label="kg" data-price="450">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Poisson</span></span>
+            <span class="line__unit">per kg</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">450</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="pasta-langouste" data-name="Pasta — Langouste" data-unit-label="kg" data-price="750">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Langouste</span></span>
+            <span class="line__unit">per kg</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">750</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="pasta-camaron" data-name="Pasta — Camaron" data-unit-label="kg" data-price="600">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Camaron</span></span>
+            <span class="line__unit">per kg</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">600</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="pasta-crabe" data-name="Pasta — Crabe" data-unit-label="kg" data-price="750">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Crabe</span></span>
+            <span class="line__unit">per kg</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">750</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="pasta-mix-mer" data-name="Pasta — Mix de la Mer" data-unit-label="kg" data-price="700">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Mix de la Mer</span></span>
+            <span class="line__unit">per kg</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">700</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        </ul>
+      </section>
+      <section class="pasta-menu__group" aria-labelledby="pasta-long-title">
+        <header><h3 id="pasta-long-title">Long Pasta</h3><p>Spaghetti &amp; pappardelle.</p></header>
+        <ul class="lines">
+        <li class="line" data-id="pasta-spaghetti-encre" data-name="Spaghetti à l’Encre de Seiche" data-unit-label="kg" data-price="250">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Spaghetti à l’Encre de Seiche</span></span>
+            <span class="line__unit">per kg</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">250</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="pasta-pappardelle" data-name="Pappardelle" data-unit-label="kg" data-price="250">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Pappardelle</span></span>
+            <span class="line__unit">per kg</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">250</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        <li class="line" data-id="pasta-pappardelle-epinard" data-name="Pappardelle Épinard" data-unit-label="kg" data-price="275">
+          <button type="button" class="line__btn">
+            <span class="line__id"><span class="line__name">Pappardelle Épinard</span></span>
+            <span class="line__unit">per kg</span>
+            <span class="line__price"><span class="rs">Rs</span><span class="num">275</span></span>
+            <span class="line__add" aria-hidden="true"></span>
+          </button>
+        </li>
+        </ul>
+      </section>
+    </div>
   </section>
   <section class="standards" id="standards" aria-labelledby="standards-title">
     <div class="standards__intro"><p class="eyebrow">02 / The Rekolt approach</p><h2 id="standards-title">Behind every <br>considered dish, <br><em>a good supplier.</em></h2><p>We grow vegetables. We source ingredients. <br>We keep the details clear, so you can <br class="desktop-break"> focus on what happens in your kitchen.</p><p class="standards__signature">Grown with care. Supplied with purpose.</p></div>
@@ -492,7 +507,7 @@
     <div class="order-details" data-order-details hidden>
       <div class="order-details__intro"><h3>A few finishing details</h3><span>Optional</span></div>
       <label for="order-business">Your name or business<input id="order-business" name="organization" autocomplete="organization" maxlength="100" placeholder="e.g. Café du Jardin" data-order-business></label>
-      <label for="order-notes">Anything we should know?<textarea id="order-notes" rows="3" maxlength="600" placeholder="Delivery request, preferred date, or pasta filling…" data-order-notes></textarea></label>
+      <label for="order-notes">Anything we should know?<textarea id="order-notes" rows="3" maxlength="600" placeholder="Delivery request, or pasta and preferred dough flavour…" data-order-notes></textarea></label>
       <p>We’ll confirm availability, delivery and final pricing together.</p>
     </div>
     <p class="order__availability" data-order-availability hidden>WhatsApp ordering is coming soon. You can still build and copy your list.</p><div class="order__actions">

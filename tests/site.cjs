@@ -31,16 +31,18 @@ let browser;
   page.on('response', r => { if (r.status() >= 400) errors.push(`${r.status()} ${r.url()}`); });
   await page.goto(baseURL, { waitUntil: 'networkidle' });
   await page.evaluate(() => document.fonts.ready);
-  assert.equal(await page.locator('.line').count(), 45);
-  const photoItems = ['queue-ail', 'queue', 'persil', 'coriandre', 'basilic', 'thym', 'romarin', 'menthe',
-    'melon-eau', 'orange', 'citron', 'limon', 'passion', 'dragon-fruit', 'papaye', 'fraise', 'framboise', 'blueberry',
-    'tomate', 'pomme-amour', 'ail', 'gingembre', 'courgette', 'poivron', 'celeri', 'poireau', 'carotte', 'laitue',
-    'betterave', 'piment', 'bok-choy', 'safran', 'chou-blanc', 'chou-rouge', 'patisson', 'giraumon', 'chouchou',
-    'barquette-herbes', 'sachet-herbes', 'fleur'];
-  for (const id of photoItems) assert.equal(await page.locator(`[data-id="${id}"]`).count(), 1, id);
-  assert.equal(await page.locator('.catalogue-products [data-onrequest="1"]').count(), 27);
+  assert.equal(await page.locator('.line').count(), 44);
+  const currentProduce = ['queue-ail', 'queue', 'persil', 'coriandre', 'basilic', 'menthe',
+    'melon-eau', 'orange', 'citron', 'passion', 'dragon-fruit', 'papaye', 'fraise', 'framboise', 'blueberry',
+    'tomate', 'pomme-amour', 'ail', 'gingembre', 'carotte', 'laitue', 'betterave', 'piment', 'bok-choy',
+    'safran', 'chou-blanc', 'chou-rouge', 'barquette-herbes', 'sachet-herbes', 'fleur'];
+  for (const id of currentProduce) assert.equal(await page.locator(`[data-id="${id}"]`).count(), 1, id);
+  for (const id of ['ananas', 'coco', 'limon', 'concombre', 'courgette', 'poivron', 'celeri', 'poireau', 'patisson', 'giraumon', 'chouchou', 'thym', 'romarin', 'ravioli', 'lasagne']) {
+    assert.equal(await page.locator(`[data-id="${id}"]`).count(), 0, `Retired: ${id}`);
+  }
+  assert.equal(await page.locator('.catalogue-products [data-onrequest="1"]').count(), 18);
   assert.equal(await page.locator('[data-onrequest="1"][data-price]').count(), 0);
-  for (const [category, count] of Object.entries({ specialty: 3, fruits: 12, veg: 20, herbs: 8 })) {
+  for (const [category, count] of Object.entries({ specialty: 3, fruits: 9, veg: 12, herbs: 6 })) {
     assert.equal(await page.locator(`[data-category="${category}"] .line`).count(), count);
     assert.equal(Number(await page.locator(`[data-filter="${category}"] span`).innerText()), count);
   }
@@ -51,26 +53,27 @@ let browser;
   await page.screenshot({ path: 'tmp/preview/desktop-hero.png' });
   await page.locator('[data-filter="fruits"]').click();
   assert.equal(await page.locator('[data-category]:visible').count(), 1);
-  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 12);
-  await page.locator('[data-id="ananas"] button').click();
-  assert.equal(await page.locator('[data-docket-total]').innerText(), '85');
+  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 9);
+  await page.locator('[data-id="orange"] button').click();
+  assert.equal(await page.locator('[data-docket-total]').innerText(), '45');
   await page.locator('[data-filter="herbs"]').click();
   await page.locator('[data-id="menthe"] button').click();
-  assert.equal(await page.locator('[data-docket-total]').innerText(), '285');
+  assert.equal(await page.locator('[data-docket-total]').innerText(), '245');
   await page.locator('[data-unit="kg"]').click();
-  assert.equal(await page.locator('[data-docket-total]').innerText(), '485');
-  await page.locator('[data-id="ravioli"] button').click();
-  assert.equal(await page.locator('[data-docket-total]').innerText(), '485');
+  assert.equal(await page.locator('[data-docket-total]').innerText(), '445');
+  await page.locator('[data-filter="all"]').click();
+  await page.locator('[data-id="citron"] button').click();
+  assert.equal(await page.locator('[data-docket-total]').innerText(), '445');
   assert.equal(await page.locator('[data-ask-note]').isVisible(), true);
-  await page.getByRole('button', { name: 'More Ananas', exact: true }).click();
-  assert.equal(await page.locator('[data-docket-total]').innerText(), '570');
-  assert.equal(await page.evaluate(() => document.activeElement.getAttribute('aria-label')), 'More Ananas');
+  await page.getByRole('button', { name: 'More Orange', exact: true }).click();
+  assert.equal(await page.locator('[data-docket-total]').innerText(), '490');
+  assert.equal(await page.evaluate(() => document.activeElement.getAttribute('aria-label')), 'More Orange');
   await page.locator('[data-copy]').click();
   const copied = await page.evaluate(() => navigator.clipboard.readText());
-  assert.match(copied, /Ananas ×2 pc/);
+  assert.match(copied, /Orange ×2 pc/);
   assert.match(copied, /Menthe ×1 kg/);
-  assert.match(copied, /Ravioli ×1 kg \(rate please\)/);
-  assert.match(copied, /Estimated subtotal: Rs 570/);
+  assert.match(copied, /Citron ×1 pc \(rate please\)/);
+  assert.match(copied, /Estimated subtotal: Rs 490/);
   const orderUrl = new URL(await page.locator('[data-wa-link]').getAttribute('href'));
   assert.equal(orderUrl.origin, 'https://wa.me');
   assert.equal(orderUrl.pathname, '/23057563134');
@@ -79,9 +82,9 @@ let browser;
   assert.equal(await page.locator('[data-order-availability]').isVisible(), false);
   assert.equal(await page.locator('[data-placeholder-note]').isVisible(), false);
   await page.reload({ waitUntil: 'networkidle' });
-  assert.equal(await page.locator('[data-docket-total]').innerText(), '570');
+  assert.equal(await page.locator('[data-docket-total]').innerText(), '490');
   assert.equal(await page.locator('.line.is-on').count(), 3);
-  await page.getByRole('button', { name: 'Remove Ananas', exact: true }).click();
+  await page.getByRole('button', { name: 'Remove Orange', exact: true }).click();
   assert.equal(await page.locator('[data-docket-total]').innerText(), '400');
   await page.locator('#order').screenshot({ path: 'tmp/preview/order-desktop.png' });
   const sizes = [320, 360, 390, 600, 768, 1024, 1440, 1920];
@@ -111,11 +114,11 @@ let browser;
   await page.locator('[data-filter="fruits"]').click();
   assert.equal(await page.locator('[data-search-empty]').isVisible(), true);
   await page.locator('[data-search-reset]').click();
-  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 43);
+  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 30);
   await page.locator('[data-search]').fill('cilantro');
   assert.equal(await page.locator('[data-id="coriandre"]').isVisible(), true);
   await page.locator('[data-search-clear]').click();
-  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 43);
+  assert.equal(await page.locator('.catalogue-products .line:visible').count(), 30);
 
   // One order workspace moves into the native modal, preserving quantities and input state.
   await page.setViewportSize({ width: 1440, height: 1000 });
@@ -126,14 +129,14 @@ let browser;
   assert.equal(await dialog.locator('[data-order-workspace]').count(), 1);
   assert.equal(await page.locator('[data-docket-lines]').count(), 1);
   await page.locator('[data-order-business]').fill('Café du Jardin & Co');
-  await page.locator('[data-order-notes]').fill('Please confirm delivery on Friday.\nRavioli filling: please advise.');
+  await page.locator('[data-order-notes]').fill('Please confirm delivery on Friday.\nPasta — Poulet: pâte classique, please.');
   assert.ok(await page.locator('.drawer-close').evaluate(el => el.getBoundingClientRect().top >= 0));
   await page.getByRole('button', { name: 'More Menthe', exact: true }).click();
   assert.equal(await page.locator('[data-docket-total]').innerText(), '800');
   let message = new URL(await page.locator('[data-wa-link]').getAttribute('href')).searchParams.get('text');
   assert.match(message, /Name \/ business: Café du Jardin & Co/);
   assert.match(message, /Notes: Please confirm delivery on Friday./);
-  assert.ok(message.includes('Friday.\nRavioli filling: please advise.'));
+  assert.ok(message.includes('Friday.\nPasta — Poulet: pâte classique, please.'));
   assert.match(message, /Menthe ×2 kg/);
   await page.keyboard.press('Tab');
   assert.equal(await page.evaluate(() => document.querySelector('[data-order-drawer]').contains(document.activeElement)), true);
@@ -185,12 +188,12 @@ let browser;
   assert.match(emptyUrl.searchParams.get('text'), /I would like to place an order/);
 
   // New produce: unknown rates must not look free; preserve known and pending units.
-  for (const [term, id] of [['rosemary', 'romarin'], ['pomme d\'amour', 'pomme-amour'], ['pâtisson', 'patisson'], ['blueberries', 'blueberry']]) {
+  for (const [term, id] of [['basil', 'basilic'], ['pomme d\'amour', 'pomme-amour'], ['white cabbage', 'chou-blanc'], ['blueberries', 'blueberry']]) {
     await page.locator('[data-search]').fill(term);
     assert.equal(await page.locator(`[data-id="${id}"]`).isVisible(), true);
   }
   await page.locator('[data-search-clear]').click();
-  for (const id of ['tomate', 'melon-eau', 'blueberry', 'giraumon', 'sachet-herbes', 'basilic']) {
+  for (const id of ['tomate', 'melon-eau', 'blueberry', 'papaye', 'sachet-herbes', 'basilic']) {
     await page.locator(`[data-id="${id}"] button`).click();
   }
   await page.locator('[data-unit="500g"]').click();
@@ -204,8 +207,8 @@ let browser;
   assert.match(quote, /Tomate ×2 \(unit to confirm; rate please\)/);
   assert.match(quote, /Melon d’Eau ×1 pc \(rate please\)/);
   assert.match(quote, /Blueberry ×1 barquette \(rate please\)/);
-  assert.match(quote, /Giraumon ×1 kg \(rate please\)/);
-  assert.match(quote, /Sachet Herbes ×1 sachet \(rate please\)/);
+  assert.match(quote, /Papaye ×1 pc \(rate please\)/);
+  assert.match(quote, /Herbes Mix Sachet ×1 sachet \(rate please\)/);
   assert.match(quote, /Pricing: on request/);
   assert.doesNotMatch(quote, /Rs 0/);
   assert.equal(new URL(await page.locator('[data-wa-link]').getAttribute('href')).searchParams.get('text'), quote.replace(/\r\n/g, '\n'));
@@ -225,7 +228,7 @@ let browser;
   await page.keyboard.press('Escape');
   // Saved orders using the former English product keep their quantities under the French name.
   await page.evaluate(() => localStorage.setItem('rekolt.order.v1', JSON.stringify({
-    order: [['microgreen', 2], ['barquette-herbes', 1]],
+    order: [['microgreen', 2], ['barquette-herbes', 1], ['ananas', 2], ['ravioli', 1], ['lasagne', 1]],
   })));
   await page.reload({ waitUntil: 'networkidle' });
   await page.locator('[data-search]').fill('micro green');
@@ -237,14 +240,57 @@ let browser;
   const mergedMessage = new URL(await page.locator('[data-wa-link]').getAttribute('href')).searchParams.get('text');
   assert.match(mergedMessage, /Barquette Herbes ×3 barquettes/);
   assert.doesNotMatch(mergedMessage, /Micro Green|rate please/);
+  assert.equal(await page.locator('.line.is-on').count(), 1);
+
+  // Every supplied pasta rate affects the estimate and the WhatsApp draft.
+  await page.locator('[data-clear]').click();
+  const pastaRates = {
+    'epinard-ricotta': 350, poulet: 450, agneau: 550, 'foie-gras': 750,
+    crevette: 550, calamar: 550, poisson: 450, langouste: 750, camaron: 600, crabe: 750,
+    'mix-mer': 700, 'spaghetti-encre': 250, pappardelle: 250, 'pappardelle-epinard': 275,
+  };
+  let pastaTotal = 0;
+  for (const [id, price] of Object.entries(pastaRates)) {
+    const item = page.locator(`[data-id="pasta-${id}"]`);
+    assert.equal(await item.getAttribute('data-unit-label'), 'kg');
+    assert.equal(await item.locator('.num').innerText(), String(price));
+    await item.locator('button').click();
+    pastaTotal += price;
+    assert.equal(await page.locator('[data-docket-total]').innerText(), pastaTotal.toLocaleString('en-US'));
+  }
+  assert.equal(pastaTotal, 7225);
+  assert.equal(await page.locator('[data-ask-note]').isVisible(), false);
+  assert.equal(await page.locator('.pasta-dough li').count(), 5);
+  for (const flavour of ['Spinach', 'Squid ink', 'Beetroot', 'Classic dough', 'Chocolate']) {
+    assert.ok((await page.locator('.pasta-dough').innerText()).includes(flavour));
+  }
+  await page.locator('[data-order-notes]').fill('Pasta — Poulet: pâte classique. Pasta — Crabe: encre de seiche.');
+  await page.getByRole('button', { name: 'More Pasta — Poulet', exact: true }).click();
+  assert.equal(await page.locator('[data-docket-total]').innerText(), '7,675');
+  await page.locator('[data-copy]').click();
+  const pastaMessage = await page.evaluate(() => navigator.clipboard.readText());
+  assert.match(pastaMessage, /Pasta — Poulet ×2 kg/);
+  assert.match(pastaMessage, /Pappardelle Épinard ×1 kg/);
+  assert.match(pastaMessage, /Estimated total: Rs 7,675/);
+  assert.match(pastaMessage, /Notes: Pasta — Poulet: pâte classique/);
+  assert.equal(new URL(await page.locator('[data-wa-link]').getAttribute('href')).searchParams.get('text'), pastaMessage.replace(/\r\n/g, '\n'));
+  await page.reload({ waitUntil: 'networkidle' });
+  assert.equal(await page.locator('[data-docket-total]').innerText(), '7,675');
+  assert.equal(await page.locator('.pasta .line.is-on').count(), 14);
+  for (const width of [320, 768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    assert.ok(await page.locator('.pasta-menu').evaluate(el => el.scrollWidth <= el.clientWidth), `Pasta overflow at ${width}`);
+    await page.locator('.pasta-menu').screenshot({ path: `tmp/preview/pasta-menu-${width}.png` });
+    await page.locator('.pasta__text').screenshot({ path: `tmp/preview/pasta-flavours-${width}.png` });
+  }
   assert.deepEqual(errors, []);
   const nojs = await browser.newContext({ javaScriptEnabled: false });
   const staticPage = await nojs.newPage();
   await staticPage.goto(baseURL);
-  assert.equal(await staticPage.locator('.line:visible').count(), 45);
+  assert.equal(await staticPage.locator('.line:visible').count(), 44);
   assert.equal(await staticPage.locator('[data-wa-link]').getAttribute('href'), 'https://wa.me/23057563134');
   await nojs.close();
-  console.log('PASS: 45 products including all 40 photographed items; categories, search, quantities, units, priced/mixed/quote-only totals, clipboard, WhatsApp draft, persistence, modal accessibility, eight viewport widths and no-JS catalogue. No messages sent.');
+  console.log('PASS: current 30 produce items, 14 priced pastas and five dough flavours; categories, search, quantities, units, priced/mixed/quote-only totals, clipboard, WhatsApp draft, persistence, modal accessibility, eight viewport widths and no-JS catalogue. No messages sent.');
 })().catch(error => { console.error(error); process.exitCode = 1; }).finally(async () => {
   if (browser) await browser.close();
   server.close();
